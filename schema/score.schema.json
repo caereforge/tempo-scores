@@ -1,0 +1,122 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://tempoapp.app/schema/score.schema.json",
+  "title": "Tempo Provider Score",
+  "description": "Declarative definition of a Tempo source: identifier, display, color, severity mapping, and default actions.",
+  "type": "object",
+  "required": ["providerIdentifier", "displayName"],
+  "additionalProperties": false,
+  "properties": {
+    "providerIdentifier": {
+      "type": "string",
+      "description": "Stable, namespaced identifier for the source (reverse-DNS or scripts.<lang>.<name>).",
+      "pattern": "^[a-z0-9]+([._-][a-z0-9]+)*$",
+      "minLength": 3
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Human-readable name shown in the source panel.",
+      "minLength": 1
+    },
+    "color": {
+      "type": "string",
+      "description": "Accent color for this source, as #RRGGBB.",
+      "pattern": "^#[0-9A-Fa-f]{6}$"
+    },
+    "severityDefault": {
+      "$ref": "#/definitions/severityEntry",
+      "description": "Fallback severity when no rule matches."
+    },
+    "severityRules": {
+      "type": "array",
+      "description": "Ordered list of rules. First match wins.",
+      "items": {
+        "type": "object",
+        "required": ["match", "severity"],
+        "additionalProperties": false,
+        "properties": {
+          "match": {
+            "type": "object",
+            "description": "Key/value pairs to match against event metadata. Values support glob-style wildcards (*).",
+            "additionalProperties": { "type": "string" }
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["info", "warning", "error", "critical"]
+          },
+          "label": {
+            "type": "string",
+            "description": "Short badge label shown in the UI."
+          }
+        }
+      }
+    },
+    "defaultActions": {
+      "type": "array",
+      "description": "Actions offered for every event from this source. Per-event actions from the payload are appended.",
+      "items": { "$ref": "#/definitions/action" }
+    }
+  },
+  "definitions": {
+    "severityEntry": {
+      "type": "object",
+      "required": ["severity"],
+      "additionalProperties": false,
+      "properties": {
+        "severity": {
+          "type": "string",
+          "enum": ["info", "warning", "error", "critical"]
+        },
+        "label": { "type": "string" }
+      }
+    },
+    "action": {
+      "type": "object",
+      "required": ["label", "systemIcon", "trigger"],
+      "additionalProperties": false,
+      "properties": {
+        "label": { "type": "string", "minLength": 1 },
+        "systemIcon": {
+          "type": "string",
+          "description": "SF Symbol name.",
+          "minLength": 1
+        },
+        "trigger": {
+          "type": "object",
+          "oneOf": [
+            {
+              "required": ["openURL"],
+              "additionalProperties": false,
+              "properties": {
+                "openURL": {
+                  "type": "string",
+                  "description": "URL to open. Supports ${metadata.xxx} interpolation. Schemes allowed in reviewed catalog: http, https, ssh, mailto, tel, and documented app schemes."
+                }
+              }
+            },
+            {
+              "required": ["openTerminalWith"],
+              "additionalProperties": false,
+              "properties": {
+                "openTerminalWith": {
+                  "type": "string",
+                  "description": "Shell command to open in Terminal. NOT allowed in reviewed catalog — local drop-in only."
+                }
+              }
+            },
+            {
+              "required": ["copyToClipboard"],
+              "additionalProperties": false,
+              "properties": {
+                "copyToClipboard": {
+                  "type": "string",
+                  "description": "Text to copy. Supports ${metadata.xxx} interpolation."
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

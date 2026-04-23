@@ -1,0 +1,19 @@
+{
+  "providerIdentifier": "com.example.generic-webhook",
+  "displayName": "Generic Webhook",
+  "color": "#8E8E93",
+  "severityDefault": { "severity": "info", "label": "Info" },
+  "severityRules": [
+    { "match": { "status": "error" },    "severity": "error",    "label": "Error" },
+    { "match": { "status": "warning" },  "severity": "warning",  "label": "Warn"  },
+    { "match": { "level":  "critical" }, "severity": "critical", "label": "Critical" }
+  ],
+  "defaultActions": [
+    { "label": "Copy payload",
+      "systemIcon": "doc.on.doc",
+      "trigger": { "copyToClipboard": "${metadata}" } },
+    { "label": "Open source URL",
+      "systemIcon": "arrow.up.right.square",
+      "trigger": { "openURL": "${metadata.url}" } }
+  ]
+}
