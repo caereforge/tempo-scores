@@ -1,0 +1,33 @@
+{
+  "providerIdentifier": "com.noodlesoft.hazel",
+  "displayName": "Hazel",
+  "color": "#C77B30",
+  "severityDefault": { "severity": "info", "label": "Rule fired" },
+  "defaultActions": [
+    {
+      "label": "Open file",
+      "systemIcon": "doc.text.magnifyingglass",
+      "trigger": { "openURL": "file://${metadata.path}" }
+    },
+    {
+      "label": "Open destination folder",
+      "systemIcon": "folder",
+      "trigger": { "openURL": "file://${metadata.dest}" }
+    },
+    {
+      "label": "Open source folder",
+      "systemIcon": "folder.badge.gearshape",
+      "trigger": { "openURL": "file://${metadata.folder}" }
+    },
+    {
+      "label": "Copy file path",
+      "systemIcon": "doc.on.doc",
+      "trigger": { "copyToClipboard": "${metadata.path}" }
+    },
+    {
+      "label": "Copy rule name",
+      "systemIcon": "rectangle.and.text.magnifyingglass",
+      "trigger": { "copyToClipboard": "${metadata.rule}" }
+    }
+  ]
+}
