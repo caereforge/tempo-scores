@@ -1,0 +1,40 @@
+{
+  "providerIdentifier": "com.proxmox",
+  "displayName": "Proxmox",
+  "color": "#E57000",
+  "severityDefault": { "severity": "info", "label": "Info" },
+  "severityRules": [
+    { "match": { "severity": "critical" }, "severity": "critical", "label": "Critical" },
+    { "match": { "severity": "error" },    "severity": "error",    "label": "Error" },
+    { "match": { "severity": "warning" },  "severity": "warning",  "label": "Warning" },
+    { "match": { "severity": "notice" },   "severity": "info",     "label": "Notice" },
+    { "match": { "severity": "info" },     "severity": "info",     "label": "Info" }
+  ],
+  "defaultActions": [
+    {
+      "label": "Open Proxmox UI",
+      "systemIcon": "server.rack",
+      "trigger": { "openURL": "${metadata.ServerUrl}/" }
+    },
+    {
+      "label": "Open Datacenter",
+      "systemIcon": "rectangle.3.group",
+      "trigger": { "openURL": "${metadata.ServerUrl}/#v1:0:18" }
+    },
+    {
+      "label": "Copy server URL",
+      "systemIcon": "doc.on.doc",
+      "trigger": { "copyToClipboard": "${metadata.ServerUrl}" }
+    },
+    {
+      "label": "Copy node name",
+      "systemIcon": "network",
+      "trigger": { "copyToClipboard": "${metadata.NodeName}" }
+    },
+    {
+      "label": "Copy VMID",
+      "systemIcon": "number",
+      "trigger": { "copyToClipboard": "${metadata.VMID}" }
+    }
+  ]
+}
