@@ -1,0 +1,43 @@
+{
+  "providerIdentifier": "net.pi-hole.pi-hole",
+  "displayName": "Pi-hole",
+  "color": "#A52B2B",
+  "severityDefault": { "severity": "info", "label": "Info" },
+  "severityRules": [
+    { "match": { "Status": "down" },                 "severity": "critical", "label": "Down" },
+    { "match": { "Status": "unreachable" },          "severity": "critical", "label": "Unreachable" },
+    { "match": { "Status": "high_load" },            "severity": "warning",  "label": "High load" },
+    { "match": { "Status": "disabled" },             "severity": "warning",  "label": "Disabled" },
+    { "match": { "Action": "blocking_disabled" },    "severity": "warning",  "label": "Blocking off" },
+    { "match": { "Action": "update_available" },     "severity": "info",     "label": "Update" },
+    { "match": { "Action": "gravity_update" },       "severity": "info",     "label": "Gravity" },
+    { "match": { "Action": "blocking_enabled" },     "severity": "info",     "label": "Blocking on" }
+  ],
+  "defaultActions": [
+    {
+      "label": "Open admin",
+      "systemIcon": "shield.lefthalf.filled",
+      "trigger": { "openURL": "${metadata.ServerUrl}/admin/" }
+    },
+    {
+      "label": "Open query log",
+      "systemIcon": "list.bullet.rectangle",
+      "trigger": { "openURL": "${metadata.ServerUrl}/admin/queries.php" }
+    },
+    {
+      "label": "Open settings",
+      "systemIcon": "gearshape",
+      "trigger": { "openURL": "${metadata.ServerUrl}/admin/settings.php" }
+    },
+    {
+      "label": "Copy server URL",
+      "systemIcon": "doc.on.doc",
+      "trigger": { "copyToClipboard": "${metadata.ServerUrl}" }
+    },
+    {
+      "label": "Copy domain",
+      "systemIcon": "globe",
+      "trigger": { "copyToClipboard": "${metadata.Domain}" }
+    }
+  ]
+}
