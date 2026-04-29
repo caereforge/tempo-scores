@@ -1,0 +1,41 @@
+{
+  "providerIdentifier": "com.vaultwarden",
+  "displayName": "Vaultwarden",
+  "color": "#175DDC",
+  "severityDefault": { "severity": "info", "label": "Info" },
+  "severityRules": [
+    { "match": { "Status": "down" },                 "severity": "critical", "label": "Down" },
+    { "match": { "Status": "unreachable" },          "severity": "critical", "label": "Unreachable" },
+    { "match": { "Event": "login_failed_burst" },    "severity": "warning",  "label": "Brute-force?" },
+    { "match": { "Event": "admin_login_failed" },    "severity": "warning",  "label": "Admin fail" },
+    { "match": { "Event": "vault_exported" },        "severity": "warning",  "label": "Vault export" },
+    { "match": { "Event": "login_failed" },          "severity": "info",     "label": "Login fail" },
+    { "match": { "Event": "user_login" },            "severity": "info",     "label": "Login" },
+    { "match": { "Event": "user_created" },          "severity": "info",     "label": "New user" },
+    { "match": { "Event": "user_invited" },          "severity": "info",     "label": "Invite" },
+    { "match": { "Event": "admin_login" },           "severity": "info",     "label": "Admin" },
+    { "match": { "Event": "backup_completed" },      "severity": "info",     "label": "Backup" }
+  ],
+  "defaultActions": [
+    {
+      "label": "Open vault",
+      "systemIcon": "lock.shield",
+      "trigger": { "openURL": "${metadata.ServerUrl}/" }
+    },
+    {
+      "label": "Open admin",
+      "systemIcon": "person.badge.key",
+      "trigger": { "openURL": "${metadata.ServerUrl}/admin/" }
+    },
+    {
+      "label": "Copy server URL",
+      "systemIcon": "doc.on.doc",
+      "trigger": { "copyToClipboard": "${metadata.ServerUrl}" }
+    },
+    {
+      "label": "Copy user email",
+      "systemIcon": "envelope",
+      "trigger": { "copyToClipboard": "${metadata.UserEmail}" }
+    }
+  ]
+}
