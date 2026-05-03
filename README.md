@@ -1,6 +1,9 @@
 # Tempo Scores
 
-Public catalog of scores for [Tempo](https://tempoapp.app) — the native macOS event hub.
+> *Tempo: for tinkerers, from a Mac to a rack.*
+
+Public catalog of scores for [Tempo](https://tempoapp.app). Every signal
+from every source on one Mac-native timeline.
 
 ## What's a score
 
