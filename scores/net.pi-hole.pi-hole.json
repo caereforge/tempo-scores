@@ -2,6 +2,8 @@
   "providerIdentifier": "net.pi-hole.pi-hole",
   "displayName": "Pi-hole",
   "color": "#A52B2B",
+  "grouping": "${metadata.ServerUrl}/${metadata.Action}",
+  "groupingWindow": "6h",
   "severityDefault": { "severity": "info", "label": "Info" },
   "severityRules": [
     { "match": { "Status": "down" },                 "severity": "critical", "label": "Down" },

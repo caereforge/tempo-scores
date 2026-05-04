@@ -2,6 +2,8 @@
   "providerIdentifier": "com.vaultwarden",
   "displayName": "Vaultwarden",
   "color": "#175DDC",
+  "grouping": ["${metadata.UserEmail}", "${metadata.Event}"],
+  "groupingWindow": "1h",
   "severityDefault": { "severity": "info", "label": "Info" },
   "severityRules": [
     { "match": { "Status": "down" },                 "severity": "critical", "label": "Down" },

@@ -2,6 +2,8 @@
   "providerIdentifier": "com.noodlesoft.hazel",
   "displayName": "Hazel",
   "color": "#C77B30",
+  "grouping": ["${metadata.rule}", "${metadata.folder}"],
+  "groupingWindow": "1d",
   "severityDefault": { "severity": "info", "label": "Rule fired" },
   "defaultActions": [
     {
