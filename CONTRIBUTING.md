@@ -48,6 +48,17 @@ If a merged score later turns out to break in some corner case, open an issue or
 
 Reviews happen as time allows. Tempo is free, and curating this catalog is a labor of love — not a full-time job. If you need a score urgently, use the local drop-in channel (just put the JSON in your own `Scores/` folder — it loads immediately, no review needed).
 
+## Sanitize before submitting
+
+A contributed score becomes public the moment the PR opens. Before pushing, check the JSON for:
+
+- **Hardcoded tokens** in `triggerPayload` or sample payloads — strip them, leave a placeholder like `<your-token>` and document the field
+- **Hostnames or IPs from your own network** in URL triggers or examples — use `your-host.local` / `192.0.2.0/24` (TEST-NET-1, RFC 5737) as documentation placeholders
+- **Filesystem paths that reveal your username or directory structure** — use `~/Documents/example/` style instead
+- **PII** in sample payloads — invent realistic-but-fake values
+
+Sanitization is a security ask but also a practical one: a score is meant to be reusable by anyone, so it shouldn't carry your specific environment.
+
 ## Questions
 
-Open a GitHub Discussion or drop a message in the Tempo Discord. Don't email.
+Open a GitHub Discussion or drop a message in the Tempo Discord — those are the channels where contributor threads live and stay searchable.
