@@ -1,0 +1,23 @@
+{
+  "providerIdentifier": "com.caldav.fastmail",
+  "displayName": "Fastmail",
+  "color": "#5F73EB",
+  "severityDefault": { "severity": "info", "label": "Event" },
+  "defaultActions": [
+    {
+      "label": "Open in Fastmail",
+      "systemIcon": "arrow.up.right.square",
+      "trigger": { "openURL": "https://app.fastmail.com/calendar/event/${metadata.fastmail_uid}" }
+    },
+    {
+      "label": "Copy event link",
+      "systemIcon": "doc.on.doc",
+      "trigger": { "copyToClipboard": "https://app.fastmail.com/calendar/event/${metadata.fastmail_uid}" }
+    },
+    {
+      "label": "Email organizer",
+      "systemIcon": "envelope",
+      "trigger": { "openURL": "mailto:${metadata.fastmail_organizer_email}" }
+    }
+  ]
+}
