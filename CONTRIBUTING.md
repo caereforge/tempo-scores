@@ -6,7 +6,9 @@ Thanks for considering a contribution. This document explains how to submit a sc
 
 1. Fork this repo.
 2. Add your score under `scores/` as `<providerIdentifier>.json` (e.g. `com.example.tool.json`).
-3. Validate locally with `tempo-validate scores/<yourfile>.json` (ships in the Tempo app bundle; symlink to `/usr/local/bin` with `ln -s /Applications/Tempo.app/Contents/MacOS/tempo-validate /usr/local/bin/tempo-validate`).
+3. Validate locally with `tempo-validate scores/<yourfile>.json`. Two ways to get it:
+   - **From the Tempo DMG**: starting with v1.0.5, `tempo-validate` ships alongside `Tempo.app` on the install disk image. Drag it to anywhere on your `PATH` (e.g. `/usr/local/bin/`).
+   - **Standalone download**: `curl -o /usr/local/bin/tempo-validate https://tempoapp.app/utilities/tempo-validate && chmod +x /usr/local/bin/tempo-validate`. Single Python 3 file, no dependencies, schema baked in.
 4. Open a pull request. In the PR body include:
    - **What it's for**: which tool / service / integration
    - **A sample event payload** (the JSON you'd POST to `/ingest`) — so the reviewer can exercise the score end-to-end
