@@ -7,6 +7,11 @@
   "required": ["providerIdentifier", "displayName"],
   "additionalProperties": false,
   "properties": {
+    "_bundledVersion": {
+      "type": "integer",
+      "description": "Version stamp used by Tempo's bundled-score seeder to detect updates. Optional; only used in bundled JSON shipped inside the app.",
+      "minimum": 1
+    },
     "providerIdentifier": {
       "type": "string",
       "description": "Stable, namespaced identifier for the source (reverse-DNS or scripts.<lang>.<name>).",
@@ -23,9 +28,13 @@
       "description": "Accent color for this source, as #RRGGBB.",
       "pattern": "^#[0-9A-Fa-f]{6}$"
     },
+    "senderSeverityWins": {
+      "type": "boolean",
+      "description": "When true (default), a payload's explicit non-info severity short-circuits the rules. When false, score rules always run, letting the user reclassify events from senders that over-declare severity."
+    },
     "severityDefault": {
       "$ref": "#/definitions/severityEntry",
-      "description": "Fallback severity when no rule matches."
+      "description": "Fallback severity/label/color when no rule matches."
     },
     "severityRules": {
       "type": "array",
@@ -37,16 +46,31 @@
         "properties": {
           "match": {
             "type": "object",
-            "description": "Key/value pairs to match against event metadata. Values support glob-style wildcards (*).",
-            "additionalProperties": { "type": "string" }
+            "description": "Key/value pairs matched against event metadata. Values stringify before comparison; strings support shell-style globs (* and ?).",
+            "additionalProperties": {
+              "type": ["string", "number", "boolean"]
+            }
           },
           "severity": {
             "type": "string",
-            "enum": ["info", "warning", "error", "critical"]
+            "enum": ["ok", "info", "warning", "error", "critical"]
           },
           "label": {
             "type": "string",
             "description": "Short badge label shown in the UI."
+          },
+          "color": {
+            "type": "string",
+            "description": "Pill color override (#RRGGBB). Lets a rule tint its badge independently from the severity tier.",
+            "pattern": "^#[0-9A-Fa-f]{6}$"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title override (${metadata.xxx} interpolated). Replaces the event title when the rule matches."
+          },
+          "subtitle": {
+            "type": "string",
+            "description": "Subtitle override (${metadata.xxx} interpolated). Shown under the title in the alert card."
           }
         }
       }
@@ -81,9 +105,14 @@
       "properties": {
         "severity": {
           "type": "string",
-          "enum": ["info", "warning", "error", "critical"]
+          "enum": ["ok", "info", "warning", "error", "critical"]
         },
-        "label": { "type": "string" }
+        "label": { "type": "string" },
+        "color": {
+          "type": "string",
+          "description": "Optional pill color override for the default badge.",
+          "pattern": "^#[0-9A-Fa-f]{6}$"
+        }
       }
     },
     "action": {
