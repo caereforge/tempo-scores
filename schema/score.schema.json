@@ -12,6 +12,10 @@
       "description": "Version stamp used by Tempo's bundled-score seeder to detect updates. Optional; only used in bundled JSON shipped inside the app.",
       "minimum": 1
     },
+    "_comment": {
+      "type": "string",
+      "description": "Free-text author note about this score. Ignored by Tempo; JSON has no comment syntax, so this is the place to leave one."
+    },
     "providerIdentifier": {
       "type": "string",
       "description": "Stable, namespaced identifier for the source (reverse-DNS or scripts.<lang>.<name>).",
