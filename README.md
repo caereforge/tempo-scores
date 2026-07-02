@@ -17,7 +17,7 @@ One score, dropped into `~/Library/Application Support/Tempo/Scores/`, turns a g
 - **Contribute**: submit new scores for tools you use, via pull request
 - **Audit**: the full git history of every reviewed score, public and immutable
 
-Tempo ships with a small set of bundled scores (Kopia, UniFi, Home Assistant, Uptime Kuma, GitHub Actions, Synology, Scripts). This repo is where the catalog **grows** beyond that core — anything community-contributed and reviewed lives here.
+**Every** score ships bundled inside Tempo — the files are tiny, so there's no reason to gate any of them behind a download; you install them in-app from **Manage Sources** with one click (a local copy, no fetch). This repo is the public **mirror** of that catalog: a browsable, auditable backup of every score the app ships, and the front door for community-contributed ones.
 
 ## Two channels
 
@@ -33,7 +33,7 @@ Three options:
 
 1. **Download** a `.json` file from `scores/` and drop it into `~/Library/Application Support/Tempo/Scores/`. Tempo reloads it within a second.
 2. **Download** a `.tempo-score` bundle (when available) and double-click it. Tempo opens an install sheet showing the provider, actions, and any required config.
-3. **In-app browser** (Tempo V1.1+): browse this catalog from Settings and install with one click.
+3. **In-app** (Tempo V1.1+): open **Manage Sources** and install any bundled score with one click — a local copy, no download. (This repo is the online mirror for browsing and contributing; the app doesn't fetch from it.)
 
 ## Contributing
 
