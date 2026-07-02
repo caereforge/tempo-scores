@@ -1,0 +1,63 @@
+{
+  "providerIdentifier": "com.radarr",
+  "displayName": "Radarr",
+  "color": "#FFC230",
+  "surface": "timeline",
+  "grouping": "${metadata.movie}",
+  "severityDefault": {
+    "severity": "info",
+    "label": "Info"
+  },
+  "severityRules": [
+    {
+      "match": {
+        "event": "HealthIssue"
+      },
+      "severity": "warning",
+      "label": "Health issue"
+    },
+    {
+      "match": {
+        "event": "ManualInteractionRequired"
+      },
+      "severity": "warning",
+      "label": "Action needed"
+    },
+    {
+      "match": {
+        "event": "Grab"
+      },
+      "severity": "info",
+      "label": "Grabbing"
+    },
+    {
+      "match": {
+        "event": "Download"
+      },
+      "severity": "ok",
+      "label": "Imported"
+    },
+    {
+      "match": {
+        "event": "HealthRestored"
+      },
+      "severity": "ok",
+      "label": "Recovered"
+    }
+  ],
+  "defaultActions": [
+    {
+      "label": "Open Radarr",
+      "systemIcon": "film",
+      "trigger": {
+        "openURL": "http://${metadata.senderAddress}:7878"
+      }
+    }
+  ],
+  "helper": {
+    "platforms": [
+      "sh"
+    ],
+    "summary": "Custom Script connection (tempo-notify.sh) posts every Radarr event to Tempo over TLS. See the arr integration README."
+  }
+}

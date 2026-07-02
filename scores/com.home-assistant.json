@@ -1,0 +1,414 @@
+{
+  "providerIdentifier": "com.home-assistant",
+  "displayName": "Home Assistant",
+  "color": "#18BCF2",
+  "grouping": "${metadata.entity_id}",
+  "groupingWindow": "1h",
+  "severityDefault": {
+    "severity": "info",
+    "label": "Info"
+  },
+  "severityRules": [
+    {
+      "match": {
+        "device_class": "smoke",
+        "state": "on"
+      },
+      "severity": "critical",
+      "label": "Smoke",
+      "title": "Smoke detected: ${metadata.friendly_name}",
+      "subtitle": "${metadata.area}"
+    },
+    {
+      "match": {
+        "device_class": "smoke",
+        "state": "off"
+      },
+      "severity": "ok",
+      "label": "Cleared",
+      "title": "Smoke cleared: ${metadata.friendly_name}",
+      "subtitle": "${metadata.area}"
+    },
+    {
+      "match": {
+        "device_class": "carbon_monoxide",
+        "state": "on"
+      },
+      "severity": "critical",
+      "label": "CO",
+      "title": "Carbon monoxide: ${metadata.friendly_name}",
+      "subtitle": "${metadata.area}"
+    },
+    {
+      "match": {
+        "device_class": "gas",
+        "state": "on"
+      },
+      "severity": "critical",
+      "label": "Gas",
+      "title": "Gas detected: ${metadata.friendly_name}",
+      "subtitle": "${metadata.area}"
+    },
+    {
+      "match": {
+        "device_class": "moisture",
+        "state": "on"
+      },
+      "severity": "critical",
+      "label": "Leak",
+      "title": "Water leak: ${metadata.friendly_name}",
+      "subtitle": "${metadata.area}"
+    },
+    {
+      "match": {
+        "device_class": "moisture",
+        "state": "off"
+      },
+      "severity": "ok",
+      "label": "Dry",
+      "title": "Leak cleared: ${metadata.friendly_name}",
+      "subtitle": "${metadata.area}"
+    },
+    {
+      "match": {
+        "device_class": "safety",
+        "state": "on"
+      },
+      "severity": "critical",
+      "label": "Unsafe",
+      "title": "Safety alert: ${metadata.friendly_name}",
+      "subtitle": "${metadata.area}"
+    },
+    {
+      "match": {
+        "device_class": "tamper",
+        "state": "on"
+      },
+      "severity": "warning",
+      "label": "Tamper",
+      "title": "Tamper detected: ${metadata.friendly_name}",
+      "subtitle": "${metadata.area}"
+    },
+    {
+      "match": {
+        "device_class": "problem",
+        "state": "on"
+      },
+      "severity": "warning",
+      "label": "Problem",
+      "title": "Problem reported: ${metadata.friendly_name}",
+      "subtitle": "${metadata.area}"
+    },
+    {
+      "match": {
+        "entity_id": "alarm_control_panel.*",
+        "state": "triggered"
+      },
+      "severity": "critical",
+      "label": "Triggered",
+      "title": "Alarm triggered: ${metadata.friendly_name}",
+      "subtitle": "${metadata.area}"
+    },
+    {
+      "match": {
+        "entity_id": "alarm_control_panel.*",
+        "state": "pending"
+      },
+      "severity": "warning",
+      "label": "Pending",
+      "title": "Alarm pending: ${metadata.friendly_name}",
+      "subtitle": "${metadata.area}"
+    },
+    {
+      "match": {
+        "entity_id": "alarm_control_panel.*",
+        "state": "armed_away"
+      },
+      "severity": "info",
+      "label": "Armed away",
+      "title": "${metadata.friendly_name} armed (away)"
+    },
+    {
+      "match": {
+        "entity_id": "alarm_control_panel.*",
+        "state": "armed_home"
+      },
+      "severity": "info",
+      "label": "Armed home",
+      "title": "${metadata.friendly_name} armed (home)"
+    },
+    {
+      "match": {
+        "entity_id": "alarm_control_panel.*",
+        "state": "armed_night"
+      },
+      "severity": "info",
+      "label": "Armed night",
+      "title": "${metadata.friendly_name} armed (night)"
+    },
+    {
+      "match": {
+        "entity_id": "alarm_control_panel.*",
+        "state": "disarmed"
+      },
+      "severity": "info",
+      "label": "Disarmed",
+      "title": "${metadata.friendly_name} disarmed"
+    },
+    {
+      "match": {
+        "entity_id": "alarm_control_panel.*",
+        "state": "arming"
+      },
+      "severity": "info",
+      "label": "Arming",
+      "title": "${metadata.friendly_name} arming"
+    },
+    {
+      "match": {
+        "entity_id": "lock.*",
+        "state": "unlocked"
+      },
+      "severity": "info",
+      "label": "Unlocked",
+      "title": "${metadata.friendly_name} unlocked",
+      "subtitle": "${metadata.area}"
+    },
+    {
+      "match": {
+        "entity_id": "lock.*",
+        "state": "locked"
+      },
+      "severity": "info",
+      "label": "Locked",
+      "title": "${metadata.friendly_name} locked",
+      "subtitle": "${metadata.area}"
+    },
+    {
+      "match": {
+        "entity_id": "person.*",
+        "state": "home"
+      },
+      "severity": "info",
+      "label": "Home",
+      "title": "${metadata.friendly_name} arrived home"
+    },
+    {
+      "match": {
+        "entity_id": "person.*",
+        "state": "not_home"
+      },
+      "severity": "info",
+      "label": "Away",
+      "title": "${metadata.friendly_name} left home"
+    },
+    {
+      "match": {
+        "entity_id": "device_tracker.*",
+        "state": "home"
+      },
+      "severity": "info",
+      "label": "Home",
+      "title": "${metadata.friendly_name} arrived home"
+    },
+    {
+      "match": {
+        "entity_id": "device_tracker.*",
+        "state": "not_home"
+      },
+      "severity": "info",
+      "label": "Away",
+      "title": "${metadata.friendly_name} left home"
+    },
+    {
+      "match": {
+        "event_type": "homeassistant_start"
+      },
+      "severity": "info",
+      "label": "HA started",
+      "title": "Home Assistant started"
+    },
+    {
+      "match": {
+        "event_type": "homeassistant_stop"
+      },
+      "severity": "warning",
+      "label": "HA stopped",
+      "title": "Home Assistant stopped"
+    },
+    {
+      "match": {
+        "device_class": "update",
+        "state": "on"
+      },
+      "severity": "info",
+      "label": "Update",
+      "title": "Update available: ${metadata.friendly_name}",
+      "subtitle": "${metadata.area}"
+    },
+    {
+      "match": {
+        "entity_id": "binary_sensor.*_smoke*",
+        "state": "on"
+      },
+      "severity": "critical",
+      "label": "Smoke",
+      "title": "Smoke detected in ${metadata.area}",
+      "subtitle": "${metadata.friendly_name}"
+    },
+    {
+      "match": {
+        "entity_id": "binary_sensor.*_smoke*",
+        "state": "off"
+      },
+      "severity": "ok",
+      "label": "Cleared",
+      "title": "Smoke cleared in ${metadata.area}",
+      "subtitle": "${metadata.friendly_name}"
+    },
+    {
+      "match": {
+        "entity_id": "binary_sensor.*_leak*",
+        "state": "on"
+      },
+      "severity": "critical",
+      "label": "Leak",
+      "title": "Water leak in ${metadata.area}",
+      "subtitle": "${metadata.friendly_name}"
+    },
+    {
+      "match": {
+        "entity_id": "binary_sensor.*_leak*",
+        "state": "off"
+      },
+      "severity": "ok",
+      "label": "Cleared",
+      "title": "Leak cleared in ${metadata.area}",
+      "subtitle": "${metadata.friendly_name}"
+    },
+    {
+      "match": {
+        "entity_id": "binary_sensor.*_water*",
+        "state": "on"
+      },
+      "severity": "critical",
+      "label": "Water",
+      "title": "Water detected in ${metadata.area}",
+      "subtitle": "${metadata.friendly_name}"
+    },
+    {
+      "match": {
+        "entity_id": "binary_sensor.*_door*",
+        "state": "on"
+      },
+      "severity": "info",
+      "label": "Opened",
+      "title": "${metadata.friendly_name} opened",
+      "subtitle": "${metadata.area}"
+    },
+    {
+      "match": {
+        "entity_id": "binary_sensor.*_door*",
+        "state": "off"
+      },
+      "severity": "info",
+      "label": "Closed",
+      "title": "${metadata.friendly_name} closed",
+      "subtitle": "${metadata.area}"
+    },
+    {
+      "match": {
+        "entity_id": "binary_sensor.*_window*",
+        "state": "on"
+      },
+      "severity": "info",
+      "label": "Opened",
+      "title": "${metadata.friendly_name} opened",
+      "subtitle": "${metadata.area}"
+    },
+    {
+      "match": {
+        "entity_id": "binary_sensor.*_window*",
+        "state": "off"
+      },
+      "severity": "info",
+      "label": "Closed",
+      "title": "${metadata.friendly_name} closed",
+      "subtitle": "${metadata.area}"
+    },
+    {
+      "match": {
+        "entity_id": "binary_sensor.*_motion",
+        "state": "on"
+      },
+      "severity": "info",
+      "label": "Motion",
+      "title": "Motion in ${metadata.area}",
+      "subtitle": "${metadata.friendly_name}"
+    },
+    {
+      "match": {
+        "device_class": "battery",
+        "state": "on"
+      },
+      "severity": "warning",
+      "label": "Low battery",
+      "title": "Low battery: ${metadata.friendly_name}",
+      "subtitle": "${metadata.area}"
+    },
+    {
+      "match": {
+        "entity_id": "climate.*"
+      },
+      "severity": "info",
+      "label": "Climate",
+      "title": "${metadata.friendly_name} set to ${metadata.state}",
+      "subtitle": "${metadata.area}"
+    },
+    {
+      "match": {
+        "automation": "*"
+      },
+      "severity": "info",
+      "label": "Automation",
+      "title": "Automation: ${metadata.automation}"
+    }
+  ],
+  "defaultActions": [
+    {
+      "label": "Open dashboard",
+      "systemIcon": "house",
+      "trigger": {
+        "openURL": "http://${metadata.senderAddress}:8123"
+      }
+    },
+    {
+      "label": "Open entity history",
+      "systemIcon": "square.3.layers.3d",
+      "trigger": {
+        "openURL": "http://${metadata.senderAddress}:8123/history?entity_id=${metadata.entity_id}"
+      }
+    },
+    {
+      "label": "Open automations",
+      "systemIcon": "bolt.horizontal",
+      "trigger": {
+        "openURL": "http://${metadata.senderAddress}:8123/config/automation/dashboard"
+      }
+    },
+    {
+      "label": "Copy entity ID",
+      "systemIcon": "doc.on.doc",
+      "trigger": {
+        "copyToClipboard": "${metadata.entity_id}"
+      }
+    },
+    {
+      "label": "HA docs",
+      "systemIcon": "book",
+      "trigger": {
+        "openURL": "https://www.home-assistant.io/docs/"
+      }
+    }
+  ]
+}

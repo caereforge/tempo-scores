@@ -1,0 +1,171 @@
+{
+  "providerIdentifier": "com.uptime-kuma",
+  "displayName": "Uptime Kuma",
+  "color": "#5CDD8B",
+  "groupingRules": [
+    {
+      "match": {
+        "badge": "DOWN",
+        "important": true
+      },
+      "role": "opens",
+      "key": "${metadata.monitorID}",
+      "window": "2h"
+    },
+    {
+      "match": {
+        "badge": "UP"
+      },
+      "role": "closes",
+      "key": "${metadata.monitorID}"
+    },
+    {
+      "match": {
+        "badge": "DOWN"
+      },
+      "role": "continues",
+      "key": "${metadata.monitorID}"
+    },
+    {
+      "match": {
+        "badge": "PENDING"
+      },
+      "role": "continues",
+      "key": "${metadata.monitorID}"
+    }
+  ],
+  "severityDefault": {
+    "severity": "info",
+    "label": "Info"
+  },
+  "severityRules": [
+    {
+      "match": {
+        "state": "down"
+      },
+      "severity": "critical",
+      "label": "Down"
+    },
+    {
+      "match": {
+        "state": "up"
+      },
+      "severity": "ok",
+      "label": "Up"
+    },
+    {
+      "match": {
+        "state": "pending"
+      },
+      "severity": "warning",
+      "label": "Pending"
+    },
+    {
+      "match": {
+        "state": "degraded"
+      },
+      "severity": "warning",
+      "label": "Degraded"
+    },
+    {
+      "match": {
+        "state": "maintenance"
+      },
+      "severity": "info",
+      "label": "Maintenance"
+    },
+    {
+      "match": {
+        "badge": "DOWN"
+      },
+      "severity": "critical",
+      "label": "Down"
+    },
+    {
+      "match": {
+        "badge": "UP"
+      },
+      "severity": "ok",
+      "label": "Up"
+    },
+    {
+      "match": {
+        "badge": "PENDING"
+      },
+      "severity": "warning",
+      "label": "Pending"
+    },
+    {
+      "match": {
+        "badge": "MAINTENANCE"
+      },
+      "severity": "info",
+      "label": "Maintenance"
+    },
+    {
+      "match": {
+        "badge": "Test"
+      },
+      "severity": "info",
+      "label": "Test"
+    }
+  ],
+  "defaultActions": [
+    {
+      "label": "Open monitor URL",
+      "systemIcon": "link",
+      "trigger": {
+        "openURL": "${metadata.url}"
+      }
+    },
+    {
+      "label": "Open Kuma dashboard",
+      "systemIcon": "chart.bar.doc.horizontal",
+      "trigger": {
+        "openURL": "http://${metadata.senderAddress}:3001"
+      }
+    },
+    {
+      "label": "Curl probe",
+      "systemIcon": "arrow.down.doc",
+      "trigger": {
+        "openTerminalWith": "curl -ksSI -o /dev/null -w 'http=%{http_code} total=%{time_total}s' ${metadata.url}"
+      }
+    },
+    {
+      "label": "Ping host",
+      "systemIcon": "waveform.path.ecg",
+      "trigger": {
+        "openTerminalWith": "ping -c 5 ${metadata.hostname}"
+      }
+    },
+    {
+      "label": "Traceroute host",
+      "systemIcon": "arrow.triangle.branch",
+      "trigger": {
+        "openTerminalWith": "traceroute ${metadata.hostname}"
+      }
+    },
+    {
+      "label": "Resolve hostname",
+      "systemIcon": "magnifyingglass",
+      "trigger": {
+        "openTerminalWith": "dig ${metadata.hostname} +short"
+      }
+    },
+    {
+      "label": "Copy monitor URL",
+      "systemIcon": "doc.on.doc",
+      "trigger": {
+        "copyToClipboard": "${metadata.url}"
+      }
+    },
+    {
+      "label": "Uptime Kuma docs",
+      "systemIcon": "book",
+      "trigger": {
+        "openURL": "https://github.com/louislam/uptime-kuma/wiki"
+      }
+    }
+  ]
+}

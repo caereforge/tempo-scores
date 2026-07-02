@@ -1,0 +1,213 @@
+{
+  "providerIdentifier": "com.shortcuts",
+  "displayName": "Shortcuts",
+  "color": "#E0457B",
+  "surface": "timeline",
+  "senderSeverityWins": true,
+  "severityDefault": {
+    "label": "Shortcut",
+    "severity": "info"
+  },
+  "severityRules": [
+    {
+      "match": {
+        "category": "sleep",
+        "state": "on"
+      },
+      "severity": "info",
+      "label": "Bedtime"
+    },
+    {
+      "match": {
+        "category": "sleep",
+        "state": "off"
+      },
+      "severity": "info",
+      "label": "Awake"
+    },
+    {
+      "match": {
+        "category": "focus",
+        "state": "on"
+      },
+      "severity": "info",
+      "label": "Focus on"
+    },
+    {
+      "match": {
+        "category": "focus",
+        "state": "off"
+      },
+      "severity": "info",
+      "label": "Focus off"
+    },
+    {
+      "match": {
+        "category": "focus"
+      },
+      "severity": "info",
+      "label": "Focus"
+    },
+    {
+      "match": {
+        "category": "location",
+        "state": "arrived"
+      },
+      "severity": "info",
+      "label": "Arrived"
+    },
+    {
+      "match": {
+        "category": "location",
+        "state": "left"
+      },
+      "severity": "info",
+      "label": "Left"
+    },
+    {
+      "match": {
+        "category": "battery",
+        "state": "low"
+      },
+      "severity": "warning",
+      "label": "Battery low"
+    },
+    {
+      "match": {
+        "category": "battery"
+      },
+      "severity": "info",
+      "label": "Battery"
+    }
+  ],
+  "indicatorRules": [
+    {
+      "match": {
+        "category": "sleep",
+        "state": "on"
+      },
+      "emoji": "🌙"
+    },
+    {
+      "match": {
+        "category": "sleep",
+        "state": "off"
+      },
+      "emoji": "☀️"
+    },
+    {
+      "match": {
+        "category": "focus"
+      },
+      "emoji": "🔕"
+    },
+    {
+      "match": {
+        "category": "location",
+        "state": "arrived"
+      },
+      "emoji": "📍"
+    },
+    {
+      "match": {
+        "category": "location",
+        "state": "left"
+      },
+      "emoji": "🚶"
+    },
+    {
+      "match": {
+        "category": "battery",
+        "state": "low"
+      },
+      "emoji": "🪫"
+    },
+    {
+      "match": {
+        "category": "battery"
+      },
+      "emoji": "🔋"
+    },
+    {
+      "match": {
+        "category": "automation"
+      },
+      "emoji": "⚙️"
+    }
+  ],
+  "tagRules": [
+    {
+      "match": {
+        "category": "sleep"
+      },
+      "tag": "sleep"
+    },
+    {
+      "match": {
+        "category": "focus"
+      },
+      "tag": "focus"
+    },
+    {
+      "match": {
+        "category": "location"
+      },
+      "tag": "location"
+    },
+    {
+      "match": {
+        "category": "battery"
+      },
+      "tag": "battery"
+    },
+    {
+      "match": {
+        "category": "automation"
+      },
+      "tag": "automation"
+    }
+  ],
+  "groupingRules": [
+    {
+      "match": {
+        "category": "sleep",
+        "state": "on"
+      },
+      "role": "opens",
+      "key": "sleep"
+    },
+    {
+      "match": {
+        "category": "sleep",
+        "state": "off"
+      },
+      "role": "closes",
+      "key": "sleep"
+    },
+    {
+      "match": {
+        "category": "focus",
+        "state": "on"
+      },
+      "role": "opens",
+      "key": "focus/${metadata.focus}"
+    },
+    {
+      "match": {
+        "category": "focus",
+        "state": "off"
+      },
+      "role": "closes",
+      "key": "focus/${metadata.focus}"
+    }
+  ],
+  "defaultActions": [
+    {
+      "label": "Copy title",
+      "systemIcon": "doc.on.doc",
+      "trigger": {
+        "copyToClipboard": "${title}"
+      }
+    }
+  ]
+}

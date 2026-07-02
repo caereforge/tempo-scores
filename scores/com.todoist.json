@@ -1,0 +1,73 @@
+{
+  "providerIdentifier": "com.todoist",
+  "displayName": "Todoist",
+  "color": "#E44232",
+  "helper": {
+    "summary": "Polls the Todoist API for due/updated tasks and posts them to Tempo.",
+    "platforms": [
+      "py"
+    ]
+  },
+  "senderSeverityWins": false,
+  "severityRules": [
+    {
+      "match": {
+        "priority": "4"
+      },
+      "severity": "critical",
+      "label": "Urgent"
+    },
+    {
+      "match": {
+        "priority": "3"
+      },
+      "severity": "warning",
+      "label": "High"
+    },
+    {
+      "match": {
+        "priority": "2"
+      },
+      "severity": "info",
+      "label": "Medium"
+    },
+    {
+      "match": {
+        "priority": "1"
+      },
+      "severity": "info"
+    }
+  ],
+  "severityDefault": {
+    "severity": "info",
+    "label": "Info"
+  },
+  "grouping": [
+    "${metadata.project}"
+  ],
+  "groupingWindow": "1d",
+  "defaultActions": [
+    {
+      "label": "Open task",
+      "systemIcon": "arrow.up.right.square",
+      "trigger": {
+        "openURL": "todoist://task?id=${metadata.taskId}"
+      }
+    },
+    {
+      "label": "Open Todoist app",
+      "systemIcon": "checkmark.circle",
+      "trigger": {
+        "openURL": "todoist://app"
+      }
+    },
+    {
+      "label": "Open Todoist (web)",
+      "systemIcon": "globe",
+      "trigger": {
+        "openURL": "https://www.todoist.com/home"
+      },
+      "_disabled": true
+    }
+  ]
+}

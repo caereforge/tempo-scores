@@ -1,35 +1,53 @@
 {
-  "providerIdentifier": "com.noodlesoft.hazel",
-  "displayName": "Hazel",
-  "color": "#C77B30",
-  "grouping": ["${metadata.rule}", "${metadata.folder}"],
-  "groupingWindow": "1d",
-  "severityDefault": { "severity": "info", "label": "Rule fired" },
+  "color": "#C9A35C",
   "defaultActions": [
     {
       "label": "Open file",
       "systemIcon": "doc.text.magnifyingglass",
-      "trigger": { "openURL": "file://${metadata.path}" }
+      "trigger": {
+        "openURL": "file://${metadata.path}"
+      }
     },
     {
       "label": "Open destination folder",
       "systemIcon": "folder",
-      "trigger": { "openURL": "file://${metadata.dest}" }
+      "trigger": {
+        "openURL": "file://${metadata.dest}"
+      }
     },
     {
       "label": "Open source folder",
       "systemIcon": "folder.badge.gearshape",
-      "trigger": { "openURL": "file://${metadata.folder}" }
+      "trigger": {
+        "openURL": "file://${metadata.folder}"
+      }
     },
     {
       "label": "Copy file path",
       "systemIcon": "doc.on.doc",
-      "trigger": { "copyToClipboard": "${metadata.path}" }
+      "trigger": {
+        "copyToClipboard": "${metadata.path}"
+      }
     },
     {
       "label": "Copy rule name",
       "systemIcon": "rectangle.and.text.magnifyingglass",
-      "trigger": { "copyToClipboard": "${metadata.rule}" }
+      "trigger": {
+        "copyToClipboard": "${metadata.rule}"
+      }
     }
-  ]
+  ],
+  "displayName": "Hazel",
+  "grouping": [
+    "${metadata.runID}",
+    "${metadata.rule}",
+    "${metadata.folder}"
+  ],
+  "groupingWindow": "1d",
+  "providerIdentifier": "com.noodlesoft.hazel",
+  "senderSeverityWins": true,
+  "severityDefault": {
+    "label": "Info",
+    "severity": "info"
+  }
 }

@@ -1,0 +1,159 @@
+{
+  "providerIdentifier": "com.github.actions",
+  "displayName": "GitHub",
+  "color": "#1F6FEB",
+  "helper": {
+    "summary": "Receives GitHub webhooks, verifies the HMAC signature, and relays them into Tempo on the LAN.",
+    "platforms": [
+      "py"
+    ]
+  },
+  "grouping": [
+    "${metadata.repo}/issue/${metadata.issueNumber}",
+    "${metadata.prUrl}",
+    "${metadata.repo}/workflow/${metadata.workflow}"
+  ],
+  "groupingWindow": "1d",
+  "severityDefault": {
+    "severity": "info",
+    "label": "Info"
+  },
+  "severityRules": [
+    {
+      "match": {
+        "issueAction": "opened"
+      },
+      "severity": "info",
+      "label": "Opened"
+    },
+    {
+      "match": {
+        "issueAction": "closed"
+      },
+      "severity": "info",
+      "label": "Closed"
+    },
+    {
+      "match": {
+        "issueAction": "reopened"
+      },
+      "severity": "info",
+      "label": "Reopened"
+    },
+    {
+      "match": {
+        "prAction": "ready_for_review"
+      },
+      "severity": "info",
+      "label": "Ready for review"
+    },
+    {
+      "match": {
+        "prAction": "opened"
+      },
+      "severity": "info",
+      "label": "Opened"
+    },
+    {
+      "match": {
+        "prAction": "reopened"
+      },
+      "severity": "info",
+      "label": "Reopened"
+    },
+    {
+      "match": {
+        "prAction": "closed",
+        "prMerged": "true"
+      },
+      "severity": "ok",
+      "label": "Merged"
+    },
+    {
+      "match": {
+        "prAction": "closed"
+      },
+      "severity": "info",
+      "label": "Closed"
+    },
+    {
+      "match": {
+        "conclusion": "success"
+      },
+      "severity": "ok",
+      "label": "Success"
+    },
+    {
+      "match": {
+        "conclusion": "failure"
+      },
+      "severity": "error",
+      "label": "Failed"
+    },
+    {
+      "match": {
+        "conclusion": "cancelled"
+      },
+      "severity": "warning",
+      "label": "Cancelled"
+    },
+    {
+      "match": {
+        "conclusion": "timed_out"
+      },
+      "severity": "error",
+      "label": "Timed out"
+    },
+    {
+      "match": {
+        "status": "in_progress"
+      },
+      "severity": "info",
+      "label": "Running"
+    },
+    {
+      "match": {
+        "status": "queued"
+      },
+      "severity": "info",
+      "label": "Queued"
+    }
+  ],
+  "defaultActions": [
+    {
+      "label": "Open run",
+      "systemIcon": "arrow.up.right.square",
+      "trigger": {
+        "openURL": "${metadata.runUrl}"
+      }
+    },
+    {
+      "label": "Open repo Actions",
+      "systemIcon": "hammer",
+      "trigger": {
+        "openURL": "https://github.com/${metadata.repo}/actions"
+      }
+    },
+    {
+      "label": "Copy repo",
+      "systemIcon": "doc.on.doc",
+      "trigger": {
+        "copyToClipboard": "${metadata.repo}"
+      }
+    },
+    {
+      "label": "Clone repo",
+      "systemIcon": "square.and.arrow.down",
+      "trigger": {
+        "openTerminalWith": "git clone https://github.com/${metadata.repo}.git"
+      }
+    },
+    {
+      "label": "GitHub Actions docs",
+      "systemIcon": "book",
+      "trigger": {
+        "openURL": "https://docs.github.com/actions"
+      }
+    }
+  ]
+}

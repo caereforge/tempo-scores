@@ -2,14 +2,14 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://tempoapp.app/schema/score.schema.json",
   "title": "Tempo Provider Score",
-  "description": "Declarative definition of a Tempo source: identifier, display, color, severity mapping, and default actions.",
+  "description": "Declarative definition of a Tempo source: identifier, display, color, surface, severity/indicator/tag rules, grouping, triage, and default actions.",
   "type": "object",
   "required": ["providerIdentifier", "displayName"],
   "additionalProperties": false,
   "properties": {
     "_bundledVersion": {
       "type": "integer",
-      "description": "Version stamp used by Tempo's bundled-score seeder to detect updates. Optional; only used in bundled JSON shipped inside the app.",
+      "description": "Version stamp used by Tempo's bundled-score seeder to detect updates. Only meaningful in the JSON shipped inside the app; omit it in shared/community scores.",
       "minimum": 1
     },
     "_comment": {
@@ -32,29 +32,36 @@
       "description": "Accent color for this source, as #RRGGBB.",
       "pattern": "^#[0-9A-Fa-f]{6}$"
     },
+    "helper": {
+      "$ref": "#/definitions/helper"
+    },
+    "eventPattern": {
+      "type": "string",
+      "description": "How events from this source behave over time. 'episodic' (default) = standalone occurrences; 'entity' = state changes of a long-lived subject driven via externalID; 'run-bound' = steps of a finite multi-step run (activates the lifecycle UI).",
+      "enum": ["episodic", "entity", "run-bound"]
+    },
+    "surface": {
+      "type": "string",
+      "description": "Which pane the events render on. 'timeline' = alert feed + heatmap, participates in the needs-attention model. 'agenda' = calendar/reminders context, read-only, neutral pill. When omitted, falls back to the event's type (alert -> timeline, else agenda).",
+      "enum": ["timeline", "agenda"]
+    },
     "senderSeverityWins": {
       "type": "boolean",
       "description": "When true (default), a payload's explicit non-info severity short-circuits the rules. When false, score rules always run, letting the user reclassify events from senders that over-declare severity."
     },
     "severityDefault": {
       "$ref": "#/definitions/severityEntry",
-      "description": "Fallback severity/label/color when no rule matches."
+      "description": "Fallback severity/label/color when no severity rule matches."
     },
     "severityRules": {
       "type": "array",
-      "description": "Ordered list of rules. First match wins.",
+      "description": "Ordered list of severity rules. First match wins. Evaluated against event metadata at render time.",
       "items": {
         "type": "object",
         "required": ["match", "severity"],
         "additionalProperties": false,
         "properties": {
-          "match": {
-            "type": "object",
-            "description": "Key/value pairs matched against event metadata. Values stringify before comparison; strings support shell-style globs (* and ?).",
-            "additionalProperties": {
-              "type": ["string", "number", "boolean"]
-            }
-          },
+          "match": { "$ref": "#/definitions/match" },
           "severity": {
             "type": "string",
             "enum": ["ok", "info", "warning", "error", "critical"]
@@ -79,13 +86,55 @@
         }
       }
     },
-    "defaultActions": {
+    "indicatorRules": {
       "type": "array",
-      "description": "Actions offered for every event from this source. Per-event actions from the payload are appended.",
-      "items": { "$ref": "#/definitions/action" }
+      "description": "Ordered list of indicator (emoji) rules, independent from severity. First match wins.",
+      "items": {
+        "type": "object",
+        "required": ["match"],
+        "additionalProperties": false,
+        "properties": {
+          "match": { "$ref": "#/definitions/match" },
+          "emoji": {
+            "type": "string",
+            "description": "Emoji rendered on matching rows."
+          },
+          "color": {
+            "type": "string",
+            "description": "Legacy named-or-hex color; migrated to the closest circle emoji on load. New rules should use 'emoji' instead."
+          }
+        }
+      }
+    },
+    "tagRules": {
+      "type": "array",
+      "description": "Ordered list of tag rules, independent from severity. First match wins.",
+      "items": {
+        "type": "object",
+        "required": ["match", "tag"],
+        "additionalProperties": false,
+        "properties": {
+          "match": { "$ref": "#/definitions/match" },
+          "tag": {
+            "type": "string",
+            "description": "Tag text. Supports ${metadata.xxx} interpolation.",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "ackRules": {
+      "type": "array",
+      "description": "Auto-acknowledge rules. When a rule matches an incoming event, Tempo marks it acknowledged at ingest (kept in the timeline, but off the dock badge and no sound).",
+      "items": { "$ref": "#/definitions/triageRule" }
+    },
+    "dismissRules": {
+      "type": "array",
+      "description": "Auto-dismiss rules. When a rule matches an incoming event, Tempo dismisses it at ingest (dropped from the live timeline; kept in the DB until retention prunes it).",
+      "items": { "$ref": "#/definitions/triageRule" }
     },
     "grouping": {
-      "description": "Stack-grouping key template(s). Events sharing the resolved key collapse into one stack. Supports ${metadata.xxx} interpolation. Provide a single string for one template, or an array of strings for a fallback chain (runtime picks the first template that fully resolves).",
+      "description": "Legacy stack-grouping key template(s). Events sharing the resolved key collapse into one stack. Supports ${metadata.xxx} interpolation. Provide a single string, or an array for a fallback chain (runtime picks the first template that fully resolves). For per-rule stacking use 'groupingRules' instead.",
       "oneOf": [
         { "type": "string", "minLength": 1 },
         {
@@ -97,14 +146,109 @@
     },
     "groupingWindow": {
       "type": "string",
-      "description": "Time window inside which related events stack. Empty string = no cutoff (events stack regardless of how far apart in time).",
-      "enum": ["", "15m", "30m", "1h", "6h", "1d", "1w"]
+      "description": "Time window inside which related events stack (e.g. '30m', '1h', '6h', '1d', '1w'). Empty string = no cutoff (events stack regardless of gap)."
+    },
+    "stackTitle": {
+      "type": "string",
+      "description": "Template that overrides the stack primary's title when this source's events render as a grouped stack (${metadata.xxx}, ${title}, ${providerIdentifier}). Single-event rows ignore it."
+    },
+    "groupingRules": {
+      "type": "array",
+      "description": "Per-rule stacking declarations (the general stacking model). First match wins. When omitted, the legacy 'grouping' + 'groupingWindow' primitive applies.",
+      "items": {
+        "type": "object",
+        "required": ["match", "role"],
+        "additionalProperties": false,
+        "properties": {
+          "match": { "$ref": "#/definitions/match" },
+          "role": {
+            "type": "string",
+            "description": "session: 'opens'/'closes' (a subject leaves and returns to rest) and 'continues' (a 'still <state>' resend joins the open episode). punctual: 'single' (never stacks) / 'repeats' (stacks repetitions of the same key within window).",
+            "enum": ["opens", "closes", "single", "repeats", "continues"]
+          },
+          "key": {
+            "type": "string",
+            "description": "Subject-key template (${metadata.clientMac}). Events whose key resolves equal form one episode/series. Required for opens/closes/continues/repeats; ignored for single."
+          },
+          "window": {
+            "type": "string",
+            "description": "'repeats' only: max stack span from the anchor (e.g. '30m', '6h', '1d'). Omit for an unbounded history."
+          },
+          "stackColor": {
+            "type": "string",
+            "description": "Per-rule override of how the stack header derives its color. Omit for the mechanism default (session -> current state, repeats -> worst severity).",
+            "enum": ["current-state", "worst-severity"]
+          }
+        }
+      }
+    },
+    "restStateOverrides": {
+      "type": "array",
+      "description": "Rest-state classification for heterogeneous sources. groupingRules assume rest = on (a server: down 'opens' the cycle). Each override marks subjects whose rest state is off (a TV: on 'opens') so the engine swaps opens<->closes for them.",
+      "items": {
+        "type": "object",
+        "required": ["match", "restState"],
+        "additionalProperties": false,
+        "properties": {
+          "match": { "$ref": "#/definitions/match" },
+          "restState": {
+            "type": "string",
+            "description": "'off' = swap opens<->closes (natural-off device); 'on' = server default (explicit).",
+            "enum": ["on", "off"]
+          },
+          "closedCycleSeverity": {
+            "type": "string",
+            "description": "Severity of a resolved cycle for the matched subjects. 'warning' = stays in needs-attention until acked; 'info' (default) = quiet.",
+            "enum": ["info", "warning"]
+          }
+        }
+      }
+    },
+    "defaultActions": {
+      "type": "array",
+      "description": "Actions offered for every event from this source. Per-event actions from the payload are appended.",
+      "items": { "$ref": "#/definitions/action" }
     }
   },
   "definitions": {
+    "match": {
+      "type": "object",
+      "description": "Key/value pairs matched against event metadata. Every key must be present and its stringified value compare equal. String values support shell-style globs (* and ?).",
+      "additionalProperties": {
+        "type": ["string", "number", "boolean", "null"]
+      }
+    },
+    "helper": {
+      "type": "object",
+      "description": "Descriptor for a companion helper/proxy the score relies on to produce events. Existence + light metadata only; Tempo never installs or runs it.",
+      "additionalProperties": false,
+      "properties": {
+        "summary": {
+          "type": "string",
+          "description": "One-line description of what the helper does."
+        },
+        "platforms": {
+          "type": "array",
+          "description": "OS variants that ship in the package, by file extension ('sh', 'py', 'ps1'). Display hint only.",
+          "items": { "type": "string" }
+        },
+        "url": {
+          "type": "string",
+          "description": "External location when the helper is not bundled beside the score."
+        }
+      }
+    },
+    "triageRule": {
+      "type": "object",
+      "description": "An auto-ack or auto-dismiss rule: if metadata matches, fire.",
+      "required": ["match"],
+      "additionalProperties": false,
+      "properties": {
+        "match": { "$ref": "#/definitions/match" }
+      }
+    },
     "severityEntry": {
       "type": "object",
-      "required": ["severity"],
       "additionalProperties": false,
       "properties": {
         "severity": {
@@ -129,6 +273,10 @@
           "type": "string",
           "description": "SF Symbol name.",
           "minLength": 1
+        },
+        "_disabled": {
+          "type": "boolean",
+          "description": "When true, the action ships disabled by default; the user can enable it in the Score Editor's Actions tab."
         },
         "trigger": {
           "type": "object",

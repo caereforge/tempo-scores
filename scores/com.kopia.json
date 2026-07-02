@@ -1,0 +1,98 @@
+{
+  "_comment": "KopiaUI's window can't be opened by an external app: since a 2026 update its window is a menubar-icon popover, so even clicking its Dock icon won't show it — use KopiaUI's menubar icon to open it. 'Open KopiaUI', the web UI, and the docs link therefore ship disabled (enable in the Score Editor if your setup supports them). The enabled actions use the kopia CLI, which works fine alongside the running KopiaUI server.",
+  "providerIdentifier": "com.kopia",
+  "displayName": "Kopia",
+  "color": "#30D158",
+  "grouping": [
+    "${metadata.repo}/${metadata.path}",
+    "${metadata.path}"
+  ],
+  "severityDefault": {
+    "severity": "info",
+    "label": "Info"
+  },
+  "severityRules": [
+    {
+      "match": {
+        "outcome": "error"
+      },
+      "severity": "error",
+      "label": "Backup failed"
+    },
+    {
+      "match": {
+        "outcome": "warning"
+      },
+      "severity": "warning",
+      "label": "Warning"
+    },
+    {
+      "match": {
+        "outcome": "ok"
+      },
+      "severity": "ok",
+      "label": "${metadata.headline}"
+    },
+    {
+      "match": {
+        "outcome": "no-change"
+      },
+      "severity": "info",
+      "label": "No change"
+    }
+  ],
+  "defaultActions": [
+    {
+      "label": "Run snapshot now",
+      "systemIcon": "arrow.clockwise",
+      "trigger": {
+        "openTerminalWith": "kopia snapshot create ${metadata.path}"
+      }
+    },
+    {
+      "label": "List snapshots",
+      "systemIcon": "list.bullet",
+      "trigger": {
+        "openTerminalWith": "kopia snapshot list ${metadata.path}"
+      }
+    },
+    {
+      "label": "Repository status",
+      "systemIcon": "info.circle",
+      "trigger": {
+        "openTerminalWith": "kopia repository status"
+      }
+    },
+    {
+      "label": "Maintenance info",
+      "systemIcon": "wrench.and.screwdriver",
+      "trigger": {
+        "openTerminalWith": "kopia maintenance info"
+      }
+    },
+    {
+      "label": "Open KopiaUI (desktop app)",
+      "systemIcon": "externaldrive.badge.checkmark",
+      "trigger": {
+        "openURL": "file:///Applications/KopiaUI.app"
+      },
+      "_disabled": true
+    },
+    {
+      "label": "Open Kopia server (web UI)",
+      "systemIcon": "server.rack",
+      "trigger": {
+        "openURL": "${metadata.server}"
+      },
+      "_disabled": true
+    },
+    {
+      "label": "Kopia docs",
+      "systemIcon": "book",
+      "trigger": {
+        "openURL": "https://kopia.io/docs/"
+      },
+      "_disabled": true
+    }
+  ]
+}

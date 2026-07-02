@@ -1,0 +1,63 @@
+{
+  "providerIdentifier": "com.sonarr",
+  "displayName": "Sonarr",
+  "color": "#35C5F0",
+  "surface": "timeline",
+  "grouping": "${metadata.series}",
+  "severityDefault": {
+    "severity": "info",
+    "label": "Info"
+  },
+  "severityRules": [
+    {
+      "match": {
+        "event": "HealthIssue"
+      },
+      "severity": "warning",
+      "label": "Health issue"
+    },
+    {
+      "match": {
+        "event": "ManualInteractionRequired"
+      },
+      "severity": "warning",
+      "label": "Action needed"
+    },
+    {
+      "match": {
+        "event": "Grab"
+      },
+      "severity": "info",
+      "label": "Grabbing"
+    },
+    {
+      "match": {
+        "event": "Download"
+      },
+      "severity": "ok",
+      "label": "Imported"
+    },
+    {
+      "match": {
+        "event": "HealthRestored"
+      },
+      "severity": "ok",
+      "label": "Recovered"
+    }
+  ],
+  "defaultActions": [
+    {
+      "label": "Open Sonarr",
+      "systemIcon": "tv",
+      "trigger": {
+        "openURL": "http://${metadata.senderAddress}:8989"
+      }
+    }
+  ],
+  "helper": {
+    "platforms": [
+      "sh"
+    ],
+    "summary": "Custom Script connection (tempo-notify.sh) posts every Sonarr event to Tempo over TLS. See the arr integration README."
+  }
+}

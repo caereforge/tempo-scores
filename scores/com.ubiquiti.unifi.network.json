@@ -1,0 +1,378 @@
+{
+  "providerIdentifier": "com.ubiquiti.unifi.network",
+  "displayName": "UniFi Network",
+  "color": "#0559C9",
+  "groupingRules": [
+    {
+      "match": {
+        "alarmName": "*Disconnected*",
+        "clientMac": "*"
+      },
+      "role": "opens",
+      "key": "${metadata.clientMac}",
+      "window": "2h"
+    },
+    {
+      "match": {
+        "alarmName": "*Connected*",
+        "clientMac": "*"
+      },
+      "role": "closes",
+      "key": "${metadata.clientMac}"
+    },
+    {
+      "match": {
+        "source": "unifi"
+      },
+      "role": "repeats",
+      "key": "${metadata.deviceMac}",
+      "window": "1h"
+    }
+  ],
+  "severityDefault": {
+    "severity": "info",
+    "label": "Info"
+  },
+  "severityRules": [
+    {
+      "match": {
+        "alarmName": "*Disconnected*",
+        "clientMac": "*"
+      },
+      "severity": "info",
+      "label": "Disconnected"
+    },
+    {
+      "match": {
+        "alarmName": "*Connected*",
+        "clientMac": "*"
+      },
+      "severity": "info",
+      "label": "Connected"
+    },
+    {
+      "match": {
+        "alarmName": "*Lost Contact*"
+      },
+      "severity": "error",
+      "label": "Down"
+    },
+    {
+      "match": {
+        "alarmName": "*Disconnected*"
+      },
+      "severity": "error",
+      "label": "Disconnected"
+    },
+    {
+      "match": {
+        "alarmName": "*Offline*"
+      },
+      "severity": "error",
+      "label": "Offline"
+    },
+    {
+      "match": {
+        "alarmName": "*Threat*"
+      },
+      "severity": "critical",
+      "label": "Threat"
+    },
+    {
+      "match": {
+        "alarmName": "*Intrusion*"
+      },
+      "severity": "critical",
+      "label": "Intrusion"
+    },
+    {
+      "match": {
+        "alarmName": "*Honeypot*"
+      },
+      "severity": "critical",
+      "label": "Honeypot"
+    },
+    {
+      "match": {
+        "alarmName": "*Rogue*"
+      },
+      "severity": "critical",
+      "label": "Rogue AP"
+    },
+    {
+      "match": {
+        "alarmName": "*Failed*"
+      },
+      "severity": "error",
+      "label": "Failed"
+    },
+    {
+      "match": {
+        "alarmName": "*Error*"
+      },
+      "severity": "error",
+      "label": "Error"
+    },
+    {
+      "match": {
+        "alarmName": "*Critical*"
+      },
+      "severity": "critical",
+      "label": "Critical"
+    },
+    {
+      "match": {
+        "alarmName": "*Upgrade Failed*"
+      },
+      "severity": "warning",
+      "label": "Upgrade failed"
+    },
+    {
+      "match": {
+        "alarmName": "*Upgrade Scheduled*"
+      },
+      "severity": "warning",
+      "label": "Upgrade scheduled"
+    },
+    {
+      "match": {
+        "alarmName": "*Restart*"
+      },
+      "severity": "warning",
+      "label": "Restart"
+    },
+    {
+      "match": {
+        "alarmName": "*Reboot*"
+      },
+      "severity": "warning",
+      "label": "Reboot"
+    },
+    {
+      "match": {
+        "alarmName": "*Speedtest Failed*"
+      },
+      "severity": "warning",
+      "label": "Speedtest failed"
+    },
+    {
+      "match": {
+        "alarmName": "*Login*"
+      },
+      "severity": "info",
+      "label": "Login"
+    },
+    {
+      "match": {
+        "alarmName": "*Connected*"
+      },
+      "severity": "info",
+      "label": "Connected"
+    },
+    {
+      "match": {
+        "alarmName": "*Adopted*"
+      },
+      "severity": "info",
+      "label": "Adopted"
+    },
+    {
+      "match": {
+        "alarmName": "*Roam*"
+      },
+      "severity": "info",
+      "label": "Roamed"
+    },
+    {
+      "match": {
+        "alarmKey": "*Lost_Contact*"
+      },
+      "severity": "error",
+      "label": "Down"
+    },
+    {
+      "match": {
+        "alarmKey": "*Disconnected*"
+      },
+      "severity": "error",
+      "label": "Disconnected"
+    },
+    {
+      "match": {
+        "alarmKey": "*Offline*"
+      },
+      "severity": "error",
+      "label": "Offline"
+    },
+    {
+      "match": {
+        "alarmKey": "EVT_IPS_*"
+      },
+      "severity": "critical",
+      "label": "Threat"
+    },
+    {
+      "match": {
+        "alarmKey": "EVT_IDS_*"
+      },
+      "severity": "critical",
+      "label": "Threat"
+    },
+    {
+      "match": {
+        "alarmKey": "*Honeypot*"
+      },
+      "severity": "critical",
+      "label": "Honeypot"
+    },
+    {
+      "match": {
+        "alarmKey": "*Rogue*"
+      },
+      "severity": "critical",
+      "label": "Rogue AP"
+    },
+    {
+      "match": {
+        "alarmKey": "*Intrusion*"
+      },
+      "severity": "critical",
+      "label": "Intrusion"
+    },
+    {
+      "match": {
+        "alarmKey": "*Fail*"
+      },
+      "severity": "error",
+      "label": "Failed"
+    },
+    {
+      "match": {
+        "alarmKey": "*Error*"
+      },
+      "severity": "error",
+      "label": "Error"
+    },
+    {
+      "match": {
+        "alarmKey": "*Critical*"
+      },
+      "severity": "critical",
+      "label": "Critical"
+    },
+    {
+      "match": {
+        "alarmKey": "*Upgrade_Failed*"
+      },
+      "severity": "warning",
+      "label": "Upgrade failed"
+    },
+    {
+      "match": {
+        "alarmKey": "*Upgrade_Scheduled*"
+      },
+      "severity": "warning",
+      "label": "Upgrade scheduled"
+    },
+    {
+      "match": {
+        "alarmKey": "*Restart*"
+      },
+      "severity": "warning",
+      "label": "Restart"
+    },
+    {
+      "match": {
+        "alarmKey": "*Reboot*"
+      },
+      "severity": "warning",
+      "label": "Reboot"
+    },
+    {
+      "match": {
+        "alarmKey": "*Speedtest_Failed*"
+      },
+      "severity": "warning",
+      "label": "Speedtest failed"
+    },
+    {
+      "match": {
+        "alarmKey": "EVT_AD_Login"
+      },
+      "severity": "info",
+      "label": "Login"
+    },
+    {
+      "match": {
+        "alarmKey": "*_Connected"
+      },
+      "severity": "info",
+      "label": "Connected"
+    },
+    {
+      "match": {
+        "alarmKey": "*_Adopted"
+      },
+      "severity": "info",
+      "label": "Adopted"
+    },
+    {
+      "match": {
+        "alarmKey": "*Roam*"
+      },
+      "severity": "info",
+      "label": "Roamed"
+    }
+  ],
+  "defaultActions": [
+    {
+      "label": "Open dashboard",
+      "systemIcon": "network",
+      "trigger": {
+        "openURL": "https://${metadata.senderAddress}/network/default/dashboard"
+      }
+    },
+    {
+      "label": "Open client in controller",
+      "systemIcon": "person.crop.square",
+      "trigger": {
+        "openURL": "https://${metadata.senderAddress}/network/default/clients/${metadata.deviceMac}"
+      }
+    },
+    {
+      "label": "Open UniFi dashboard (cloud)",
+      "systemIcon": "cloud",
+      "trigger": {
+        "openURL": "https://unifi.ui.com/"
+      }
+    },
+    {
+      "label": "SSH to controller",
+      "systemIcon": "terminal",
+      "trigger": {
+        "openURL": "ssh://root@${metadata.senderAddress}"
+      }
+    },
+    {
+      "label": "Copy device name",
+      "systemIcon": "doc.on.doc",
+      "trigger": {
+        "copyToClipboard": "${metadata.device}"
+      }
+    },
+    {
+      "label": "Copy MAC address",
+      "systemIcon": "number",
+      "trigger": {
+        "copyToClipboard": "${metadata.deviceMac}"
+      }
+    },
+    {
+      "label": "UniFi docs",
+      "systemIcon": "book",
+      "trigger": {
+        "openURL": "https://help.ui.com/hc/en-us/categories/6583256751383-UniFi"
+      }
+    }
+  ]
+}

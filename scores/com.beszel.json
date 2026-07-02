@@ -1,0 +1,90 @@
+{
+  "color": "#B63600",
+  "defaultActions": [
+    {
+      "label": "Open Beszel",
+      "systemIcon": "chart.bar.xaxis",
+      "trigger": {
+        "openURL": "http://${metadata.senderAddress}:8090"
+      }
+    },
+    {
+      "label": "Copy system name",
+      "systemIcon": "doc.on.doc",
+      "trigger": {
+        "copyToClipboard": "${metadata.System}"
+      }
+    }
+  ],
+  "displayName": "Beszel",
+  "groupingRules": [
+    {
+      "key": "${metadata.System}/${metadata.Metric}",
+      "match": {
+        "Event": "alert_triggered"
+      },
+      "role": "opens",
+      "window": "6h"
+    },
+    {
+      "key": "${metadata.System}/${metadata.Metric}",
+      "match": {
+        "Event": "alert_resolved"
+      },
+      "role": "closes"
+    },
+    {
+      "key": "${metadata.System}/${metadata.Metric}",
+      "match": {
+        "Event": "alert_triggered"
+      },
+      "role": "continues"
+    }
+  ],
+  "groupingWindow": "1h",
+  "helper": {
+    "platforms": [
+      "py"
+    ],
+    "summary": "Polls the Beszel hub for triggered alerts and posts them to Tempo."
+  },
+  "providerIdentifier": "com.beszel",
+  "senderSeverityWins": true,
+  "severityDefault": {
+    "label": "Info",
+    "severity": "info"
+  },
+  "severityRules": [
+    {
+      "label": "System down",
+      "match": {
+        "Event": "alert_triggered",
+        "Metric": "Status"
+      },
+      "severity": "critical"
+    },
+    {
+      "label": "Disk",
+      "match": {
+        "Event": "alert_triggered",
+        "Metric": "Disk"
+      },
+      "severity": "critical"
+    },
+    {
+      "label": "Over threshold",
+      "match": {
+        "Event": "alert_triggered"
+      },
+      "severity": "warning"
+    },
+    {
+      "label": "Recovered",
+      "match": {
+        "Event": "alert_resolved"
+      },
+      "severity": "ok"
+    }
+  ],
+  "surface": "timeline"
+}

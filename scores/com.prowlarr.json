@@ -1,0 +1,41 @@
+{
+  "providerIdentifier": "com.prowlarr",
+  "displayName": "Prowlarr",
+  "color": "#E66000",
+  "surface": "timeline",
+  "severityDefault": {
+    "severity": "info",
+    "label": "Info"
+  },
+  "severityRules": [
+    {
+      "match": {
+        "event": "HealthIssue"
+      },
+      "severity": "warning",
+      "label": "Health issue"
+    },
+    {
+      "match": {
+        "event": "HealthRestored"
+      },
+      "severity": "ok",
+      "label": "Recovered"
+    }
+  ],
+  "defaultActions": [
+    {
+      "label": "Open Prowlarr",
+      "systemIcon": "magnifyingglass",
+      "trigger": {
+        "openURL": "http://${metadata.senderAddress}:9696"
+      }
+    }
+  ],
+  "helper": {
+    "platforms": [
+      "sh"
+    ],
+    "summary": "Custom Script connection (tempo-notify.sh) posts Prowlarr health/update events to Tempo over TLS. See the arr integration README."
+  }
+}

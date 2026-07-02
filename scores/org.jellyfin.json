@@ -1,47 +1,173 @@
 {
-  "providerIdentifier": "org.jellyfin",
-  "displayName": "Jellyfin",
-  "color": "#AA5CC3",
-  "grouping": ["${metadata.ItemId}", "${metadata.Username}"],
-  "groupingWindow": "6h",
-  "severityDefault": { "severity": "info", "label": "Info" },
-  "severityRules": [
-    { "match": { "NotificationType": "AuthenticationFailure" }, "severity": "error",   "label": "Auth fail" },
-    { "match": { "NotificationType": "ApplicationError" },      "severity": "error",   "label": "Error" },
-    { "match": { "NotificationType": "*Failed" },               "severity": "error",   "label": "Failed" },
-    { "match": { "NotificationType": "ScheduledTaskFailed" },   "severity": "warning", "label": "Task failed" },
-    { "match": { "NotificationType": "PluginInstalled" },       "severity": "info",    "label": "Plugin" },
-    { "match": { "NotificationType": "PluginUninstalled" },     "severity": "info",    "label": "Plugin" },
-    { "match": { "NotificationType": "PluginUpdated" },         "severity": "info",    "label": "Plugin" },
-    { "match": { "NotificationType": "ItemAdded" },             "severity": "info",    "label": "New item" },
-    { "match": { "NotificationType": "PlaybackStart" },         "severity": "info",    "label": "Started" },
-    { "match": { "NotificationType": "PlaybackStop" },          "severity": "info",    "label": "Stopped" }
-  ],
+  "color": "#95A400",
   "defaultActions": [
     {
       "label": "Open Jellyfin",
       "systemIcon": "play.tv",
-      "trigger": { "openURL": "${metadata.ServerUrl}/web/" }
+      "trigger": {
+        "openURL": "${metadata.ServerUrl}/web/"
+      }
     },
     {
       "label": "Open item",
       "systemIcon": "film",
-      "trigger": { "openURL": "${metadata.ServerUrl}/web/index.html#!/details?id=${metadata.ItemId}" }
+      "trigger": {
+        "openURL": "${metadata.ServerUrl}/web/index.html#!/details?id=${metadata.ItemId}"
+      }
     },
     {
       "label": "Open admin dashboard",
       "systemIcon": "gauge",
-      "trigger": { "openURL": "${metadata.ServerUrl}/web/index.html#!/dashboard.html" }
+      "trigger": {
+        "openURL": "${metadata.ServerUrl}/web/index.html#!/dashboard.html"
+      }
     },
     {
       "label": "Copy server URL",
       "systemIcon": "doc.on.doc",
-      "trigger": { "copyToClipboard": "${metadata.ServerUrl}" }
+      "trigger": {
+        "copyToClipboard": "${metadata.ServerUrl}"
+      }
     },
     {
       "label": "Copy item ID",
       "systemIcon": "number",
-      "trigger": { "copyToClipboard": "${metadata.ItemId}" }
+      "trigger": {
+        "copyToClipboard": "${metadata.ItemId}"
+      }
+    }
+  ],
+  "displayName": "Jellyfin",
+  "grouping": [
+    "${metadata.ItemId}",
+    "${metadata.Username}"
+  ],
+  "groupingRules": [
+    {
+      "key": "added:${metadata.SeriesName}",
+      "match": {
+        "ItemType": "Episode",
+        "NotificationType": "ItemAdded"
+      },
+      "role": "repeats",
+      "window": "6h"
+    },
+    {
+      "key": "deleted:${metadata.SeriesName}",
+      "match": {
+        "NotificationType": "ItemDeleted"
+      },
+      "role": "repeats",
+      "window": "6h"
+    },
+    {
+      "key": "play:${metadata.ItemId}:${metadata.Username}",
+      "match": {
+        "NotificationType": "PlaybackStart"
+      },
+      "role": "opens"
+    },
+    {
+      "key": "play:${metadata.ItemId}:${metadata.Username}",
+      "match": {
+        "NotificationType": "PlaybackStop"
+      },
+      "role": "closes"
+    }
+  ],
+  "groupingWindow": "6h",
+  "indicatorRules": [
+    {
+      "emoji": "🔊",
+      "match": {
+        "ItemType": "Audio"
+      }
+    },
+    {
+      "emoji": "🎥",
+      "match": {
+        "ItemType": "Movie"
+      }
+    }
+  ],
+  "providerIdentifier": "org.jellyfin",
+  "senderSeverityWins": true,
+  "severityDefault": {
+    "label": "Info",
+    "severity": "info"
+  },
+  "severityRules": [
+    {
+      "label": "Auth failed",
+      "match": {
+        "NotificationType": "AuthenticationFailure"
+      },
+      "severity": "error"
+    },
+    {
+      "label": "Error",
+      "match": {
+        "NotificationType": "ApplicationError"
+      },
+      "severity": "error"
+    },
+    {
+      "label": "Failed",
+      "match": {
+        "NotificationType": "*Failed"
+      },
+      "severity": "error"
+    },
+    {
+      "label": "Task failed",
+      "match": {
+        "NotificationType": "ScheduledTaskFailed"
+      },
+      "severity": "warning"
+    },
+    {
+      "label": "Plugin",
+      "match": {
+        "NotificationType": "PluginInstalled"
+      },
+      "severity": "info"
+    },
+    {
+      "label": "Plugin",
+      "match": {
+        "NotificationType": "PluginUninstalled"
+      },
+      "severity": "info"
+    },
+    {
+      "label": "Plugin",
+      "match": {
+        "NotificationType": "PluginUpdated"
+      },
+      "severity": "info"
+    },
+    {
+      "label": "New item",
+      "match": {
+        "NotificationType": "ItemAdded"
+      },
+      "severity": "info"
+    },
+    {
+      "label": "Started",
+      "match": {
+        "NotificationType": "PlaybackStart"
+      },
+      "severity": "info",
+      "subtitle": "${metadata.Username} · ${metadata.DeviceName} (${metadata.ClientName})"
+    },
+    {
+      "label": "Stopped",
+      "match": {
+        "NotificationType": "PlaybackStop"
+      },
+      "severity": "info",
+      "subtitle": "${metadata.Username} · ${metadata.DeviceName} (${metadata.ClientName})"
     }
   ]
 }

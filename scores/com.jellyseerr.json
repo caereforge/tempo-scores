@@ -1,0 +1,85 @@
+{
+  "providerIdentifier": "com.jellyseerr",
+  "displayName": "Jellyseerr",
+  "color": "#6366F1",
+  "surface": "timeline",
+  "grouping": "${metadata.subject}",
+  "severityDefault": {
+    "severity": "info",
+    "label": "Info"
+  },
+  "severityRules": [
+    {
+      "match": {
+        "event": "MEDIA_FAILED"
+      },
+      "severity": "error",
+      "label": "Failed"
+    },
+    {
+      "match": {
+        "event": "MEDIA_PENDING"
+      },
+      "severity": "warning",
+      "label": "Pending approval"
+    },
+    {
+      "match": {
+        "event": "ISSUE_CREATED"
+      },
+      "severity": "warning",
+      "label": "Issue opened"
+    },
+    {
+      "match": {
+        "event": "MEDIA_APPROVED"
+      },
+      "severity": "info",
+      "label": "Approved"
+    },
+    {
+      "match": {
+        "event": "MEDIA_AUTO_APPROVED"
+      },
+      "severity": "info",
+      "label": "Approved"
+    },
+    {
+      "match": {
+        "event": "MEDIA_DECLINED"
+      },
+      "severity": "info",
+      "label": "Declined"
+    },
+    {
+      "match": {
+        "event": "ISSUE_REOPENED"
+      },
+      "severity": "warning",
+      "label": "Issue opened"
+    },
+    {
+      "match": {
+        "event": "MEDIA_AVAILABLE"
+      },
+      "severity": "ok",
+      "label": "Available"
+    },
+    {
+      "match": {
+        "event": "ISSUE_RESOLVED"
+      },
+      "severity": "ok",
+      "label": "Resolved"
+    }
+  ],
+  "defaultActions": [
+    {
+      "label": "Open Jellyseerr",
+      "systemIcon": "play.rectangle",
+      "trigger": {
+        "openURL": "http://${metadata.senderAddress}:5055"
+      }
+    }
+  ]
+}

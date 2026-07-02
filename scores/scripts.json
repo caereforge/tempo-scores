@@ -1,43 +1,96 @@
 {
   "providerIdentifier": "scripts",
   "displayName": "Scripts",
-  "color": "#8E8E93",
-  "grouping": ["${metadata.script_name}", "${providerIdentifier}"],
+  "color": "#C9A35C",
+  "grouping": [
+    "${metadata.runID}",
+    "${metadata.script_name}",
+    "${providerIdentifier}"
+  ],
   "groupingWindow": "1d",
-  "severityDefault": { "severity": "info", "label": "Info" },
+  "severityDefault": {
+    "severity": "info",
+    "label": "Info"
+  },
   "severityRules": [
-    { "match": { "keyword": "OK" },        "severity": "ok",       "label": "OK" },
-    { "match": { "keyword": "Done" },      "severity": "ok",       "label": "Done" },
-    { "match": { "keyword": "Success" },   "severity": "ok",       "label": "Success" },
-    { "match": { "keyword": "Pulito" },    "severity": "ok",       "label": "Pulito" },
-
-    { "match": { "keyword": "Warning" },   "severity": "warning",  "label": "Warning" },
-    { "match": { "keyword": "Slow" },      "severity": "warning",  "label": "Slow" },
-    { "match": { "keyword": "Retried" },   "severity": "warning",  "label": "Retried" },
-
-    { "match": { "keyword": "Error" },     "severity": "error",    "label": "Error" },
-    { "match": { "keyword": "Failed" },    "severity": "error",    "label": "Failed" },
-    { "match": { "keyword": "Timeout" },   "severity": "error",    "label": "Timeout" },
-
-    { "match": { "keyword": "Critical" },  "severity": "critical", "label": "Critical" },
-    { "match": { "keyword": "Down" },      "severity": "critical", "label": "Down" },
-
-    { "match": { "script_name": "cron_cleanup", "keyword": "Skipped" },
-      "severity": "info", "label": "Skipped", "color": "#6E7681" },
-
-    { "match": { "label": "Critical" },        "severity": "critical", "label": "Critical" },
-    { "match": { "label": "Critical issues" }, "severity": "error",    "label": "Critical" },
-    { "match": { "label": "Error" },           "severity": "error",    "label": "Error" },
-    { "match": { "label": "Elevated errors" }, "severity": "warning",  "label": "Elevated" },
-    { "match": { "label": "Low space" },       "severity": "warning",  "label": "Warning" },
-    { "match": { "label": "High" },            "severity": "warning",  "label": "Warning" },
-    { "match": { "label": "Warning" },         "severity": "warning",  "label": "Warning" },
-    { "match": { "label": "OK" },              "severity": "ok",       "label": "OK" }
+    {
+      "match": {
+        "label": "Critical"
+      },
+      "severity": "error",
+      "label": "Critical"
+    },
+    {
+      "match": {
+        "label": "Critical issues"
+      },
+      "severity": "error",
+      "label": "Critical"
+    },
+    {
+      "match": {
+        "label": "Error"
+      },
+      "severity": "error",
+      "label": "Error"
+    },
+    {
+      "match": {
+        "label": "Elevated errors"
+      },
+      "severity": "warning",
+      "label": "Elevated"
+    },
+    {
+      "match": {
+        "label": "Low space"
+      },
+      "severity": "warning",
+      "label": "Warning"
+    },
+    {
+      "match": {
+        "label": "High"
+      },
+      "severity": "warning",
+      "label": "Warning"
+    },
+    {
+      "match": {
+        "label": "Warning"
+      },
+      "severity": "warning",
+      "label": "Warning"
+    },
+    {
+      "match": {
+        "label": "OK"
+      },
+      "severity": "ok",
+      "label": "OK"
+    }
   ],
   "defaultActions": [
-    { "label": "SSH to source host", "systemIcon": "terminal",   "trigger": { "openURL": "ssh://${metadata.host}" } },
-    { "label": "Copy host",          "systemIcon": "doc.on.doc", "trigger": { "copyToClipboard": "${metadata.host}" } },
-    { "label": "Copy script name",   "systemIcon": "doc.on.doc", "trigger": { "copyToClipboard": "${metadata.script_name}" } },
-    { "label": "Copy title",         "systemIcon": "doc.on.doc", "trigger": { "copyToClipboard": "${title}" } }
+    {
+      "label": "SSH to source host",
+      "systemIcon": "terminal",
+      "trigger": {
+        "openURL": "ssh://${metadata.host}"
+      }
+    },
+    {
+      "label": "Copy host",
+      "systemIcon": "doc.on.doc",
+      "trigger": {
+        "copyToClipboard": "${metadata.host}"
+      }
+    },
+    {
+      "label": "Copy title",
+      "systemIcon": "doc.on.doc",
+      "trigger": {
+        "copyToClipboard": "${title}"
+      }
+    }
   ]
 }

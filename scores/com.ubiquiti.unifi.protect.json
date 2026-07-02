@@ -1,0 +1,121 @@
+{
+  "providerIdentifier": "com.ubiquiti.unifi.protect",
+  "displayName": "UniFi Protect",
+  "color": "#0559C9",
+  "groupingRules": [
+    {
+      "match": {
+        "source": "protect"
+      },
+      "role": "repeats",
+      "key": "${metadata.cameraMac}",
+      "window": "5m"
+    }
+  ],
+  "severityDefault": {
+    "severity": "info",
+    "label": "Motion"
+  },
+  "severityRules": [
+    {
+      "match": {
+        "detectionType": "intruder*"
+      },
+      "severity": "critical",
+      "label": "Intruder"
+    },
+    {
+      "match": {
+        "detectionType": "*alarm*"
+      },
+      "severity": "critical",
+      "label": "Alarm"
+    },
+    {
+      "match": {
+        "detectionType": "smartdetect_*"
+      },
+      "severity": "warning",
+      "label": "Smart detect"
+    },
+    {
+      "match": {
+        "detectionType": "*person*"
+      },
+      "severity": "warning",
+      "label": "Person"
+    },
+    {
+      "match": {
+        "detectionType": "*vehicle*"
+      },
+      "severity": "warning",
+      "label": "Vehicle"
+    },
+    {
+      "match": {
+        "detectionType": "*package*"
+      },
+      "severity": "warning",
+      "label": "Package"
+    },
+    {
+      "match": {
+        "detectionType": "*face*"
+      },
+      "severity": "warning",
+      "label": "Face"
+    },
+    {
+      "match": {
+        "detectionType": "motion"
+      },
+      "severity": "info",
+      "label": "Motion"
+    },
+    {
+      "match": {
+        "detectionType": "ring"
+      },
+      "severity": "warning",
+      "label": "Doorbell"
+    }
+  ],
+  "defaultActions": [
+    {
+      "label": "Open in Protect",
+      "systemIcon": "video",
+      "trigger": {
+        "openURL": "${metadata.eventLocalLink}"
+      }
+    },
+    {
+      "label": "Open Protect cloud",
+      "systemIcon": "cloud",
+      "trigger": {
+        "openURL": "https://unifi.ui.com/"
+      }
+    },
+    {
+      "label": "Copy event ID",
+      "systemIcon": "doc.on.doc",
+      "trigger": {
+        "copyToClipboard": "${metadata.eventId}"
+      }
+    },
+    {
+      "label": "Copy camera MAC",
+      "systemIcon": "number",
+      "trigger": {
+        "copyToClipboard": "${metadata.cameraMac}"
+      }
+    },
+    {
+      "label": "UniFi Protect docs",
+      "systemIcon": "book",
+      "trigger": {
+        "openURL": "https://help.ui.com/hc/en-us/categories/6583256751383-UniFi"
+      }
+    }
+  ]
+}
