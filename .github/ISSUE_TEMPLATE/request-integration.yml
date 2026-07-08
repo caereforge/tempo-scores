@@ -1,0 +1,43 @@
+name: Request an integration
+description: Ask for a Tempo score for a tool that isn't covered yet.
+title: "[Request] <tool name>"
+labels: ["score request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Want Tempo to speak a tool it doesn't cover yet? Request it here.
+        Requests are public, so they double as a wishlist anyone (you, another
+        contributor, or the Tempo team) can pick up. If you can write the score
+        yourself, a pull request is even better and faster; see
+        [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md).
+  - type: input
+    id: tool
+    attributes:
+      label: Tool / service
+      description: The source you want covered (name, and a link if it has one).
+      placeholder: "e.g. Nextcloud, https://nextcloud.com"
+    validations:
+      required: true
+  - type: dropdown
+    id: how
+    attributes:
+      label: How does it send events?
+      options:
+        - Native webhook / notification
+        - A script or cron I would point at Tempo
+        - Not sure
+    validations:
+      required: true
+  - type: textarea
+    id: events
+    attributes:
+      label: What events matter, and what would you do with them?
+      description: Which events would you want on your timeline, and what action (open a dashboard, SSH in, run a command) would you take on them?
+      placeholder: "e.g. storage full, failed login, backup done. I'd want a one-click SSH to the host."
+  - type: textarea
+    id: payload
+    attributes:
+      label: Sample payload (optional, speeds things up a lot)
+      description: If you have an example of the JSON the tool would POST, paste it. Strip real tokens, network IPs and PII first.
+      render: json

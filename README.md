@@ -39,6 +39,8 @@ Three options:
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for the review rubric and PR flow.
 
+**Can't write the score yourself?** [Request an integration](../../issues/new?template=request-integration.yml) instead. Requests are public, so they double as a wishlist anyone can pick up.
+
 **Short version**: fork, add your score under `scores/`, open a PR with a sample event payload that proves it works. Reviews happen as time allows — Tempo is free, and curating the catalog is a labor of love, not a full-time job.
 
 ## Responsibility
